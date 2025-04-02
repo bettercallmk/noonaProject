@@ -26,16 +26,43 @@ const choice = {
 
 function App() {
   const [userSelect, setUserSelect] = useState(null);
-
+  const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState("");
   const play = (userChoice) => {
     setUserSelect(choice[userChoice]);
+    let computerChoice = randomChoice();
+    setComputerSelect(computerChoice);
+
+    setResult(judgement(choice[userChoice], computerChoice));
+  };
+
+  const judgement = (user, computer) => {
+
+    if (user.name === computer.name) {
+      return "tie";
+    } else if (user.name === "Rock") return computer.name=== "Scissors" ? "win" : "lose"
+    else if (user.name === "Scissors") return computer.name=== "Paper" ? "win" : "lose"
+    else if (user.name === "Paper") return computer.name=== "Rock" ? "win" : "lose"
   }
+
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice);
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    let final = itemArray[randomItem];
+    return choice[final];
+  }
+
+  const reverseResult = (res) => {
+    if (res === "win") return "lose";
+    if (res === "lose") return "win";
+    return "tie";
+  };
 
   return (
       <div>
         <div className="main">
-          <Box title="YOU" item={userSelect} />
-          {/*<Box title="COMPUTER"/>*/}
+          <Box title="YOU" item={userSelect} result={result}/>
+          <Box title="COMPUTER" item={computerSelect} result={reverseResult(result)}/>
         </div>
         <div className="main">
           <button onClick={()=>play("scissors")}>가위</button>
