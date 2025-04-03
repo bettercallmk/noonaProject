@@ -55,7 +55,8 @@ function App() {
   const reverseResult = (res) => {
     if (res === "win") return "lose";
     if (res === "lose") return "win";
-    return "tie";
+    if (res === "tie") return "tie";
+    return ""; // 그 외 초기값인 경우는 빈 문자열 유지
   };
 
   return (
